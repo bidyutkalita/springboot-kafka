@@ -8,18 +8,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bidyut.springbootkafkademo.dto.UserDTO;
+
 @RestController
 @RequestMapping("publish")
 public class KafkaPublisher {
 	
 	@Autowired
-	KafkaTemplate<String , String> kafkkaTemplet;
+	KafkaTemplate<String , UserDTO> kafkkaTemplet;
 	
 	@GetMapping("/{message}")
 	@ResponseBody
 	public String publishToKafka(@PathVariable("message") String message)
 	{
-		kafkkaTemplet.send("testTopic", message);
+		kafkkaTemplet.send("testTopic",new UserDTO("Bidyut", message) );
 		return "published";
 	}
 	/*running zookeeper
